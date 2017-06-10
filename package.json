@@ -1,7 +1,7 @@
 {
-    "name": "vscode-symbol-outline",
-    "displayName": "vscode-symbol-outline",
-    "description": "A symbol outline tree provider",
+    "name": "vscode-code-outline",
+    "displayName": "Code Outline",
+    "description": "A code outline tree provider for VSCode",
     "version": "0.0.1",
     "publisher": "patrys",
     "engines": {

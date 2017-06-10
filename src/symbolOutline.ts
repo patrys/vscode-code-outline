@@ -1,124 +1,133 @@
-import * as vscode from 'vscode';
-import { SymbolKind } from 'vscode';
+import { Event, EventEmitter, ExtensionContext, SymbolKind, SymbolInformation, TextDocument, TextEditor, TreeDataProvider, TreeItem, TreeItemCollapsibleState, commands, window } from 'vscode';
 import * as path from 'path';
 
-const getKindOrder = (kind: SymbolKind): number => {
-    const kindOrder = {
-        [SymbolKind.Class]: 2,
-        [SymbolKind.Constant]: -1,
-        [SymbolKind.Constructor]: 3,
-        [SymbolKind.Function]: 3,
-        [SymbolKind.Interface]: 1,
-        [SymbolKind.Method]: 3,
-        [SymbolKind.Module]: -2
-    };
-    if (kind in kindOrder) {
-        return kindOrder[kind];
-    }
-    return 0;
-}
-
-const compareSymbols = (a: SymbolNode, b: SymbolNode): number => {
-    const kindOrder = getKindOrder(a.symbol.kind) - getKindOrder(b.symbol.kind);
-    if (kindOrder !== 0) {
-        return kindOrder;
-    }
-    if (a.symbol.name.toLowerCase() > b.symbol.name.toLowerCase()) {
-        return 1;
-    }
-    return -1;
-}
-
 export class SymbolNode {
-    symbol: vscode.SymbolInformation;
+    symbol: SymbolInformation;
     children?: SymbolNode[];
 
-    constructor(symbol?: vscode.SymbolInformation) {
+    constructor(symbol?: SymbolInformation) {
         this.children = [];
         this.symbol = symbol;
     }
 
+    private getKindOrder(kind: SymbolKind): number {
+        switch (kind) {
+            case SymbolKind.Constructor:
+            case SymbolKind.Function:
+            case SymbolKind.Method:
+                return 3;
+            case SymbolKind.Class:
+                return 2;
+            case SymbolKind.Interface:
+                return 1;
+            case SymbolKind.Constant:
+                return -1;
+            case SymbolKind.Module:
+                return -2;
+            default:
+                return 0;
+        };
+    }
+
+    private compareSymbols(a: SymbolNode, b: SymbolNode): number {
+        const kindOrder = this.getKindOrder(a.symbol.kind) - this.getKindOrder(b.symbol.kind);
+        if (kindOrder !== 0) {
+            return kindOrder;
+        }
+        if (a.symbol.name.toLowerCase() > b.symbol.name.toLowerCase()) {
+            return 1;
+        }
+        return -1;
+    }
+
+    sort() {
+        this.children.sort(this.compareSymbols.bind(this));
+        this.children.forEach((child) => child.sort());
+    }
+
     addChild(child: SymbolNode) {
         this.children.push(child);
-        this.children.sort(compareSymbols);
     }
 }
 
-export class SymbolOutlineProvider implements vscode.TreeDataProvider<SymbolNode> {
-    private _onDidChangeTreeData: vscode.EventEmitter<SymbolNode | null> = new vscode.EventEmitter<SymbolNode | null>();
-    readonly onDidChangeTreeData: vscode.Event<SymbolNode | null> = this._onDidChangeTreeData.event;
+export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
+    private _onDidChangeTreeData: EventEmitter<SymbolNode | null> = new EventEmitter<SymbolNode | null>();
+    readonly onDidChangeTreeData: Event<SymbolNode | null> = this._onDidChangeTreeData.event;
 
-    private context: vscode.ExtensionContext;
+    private context: ExtensionContext;
     private tree: SymbolNode;
 
-    private async updateSymbols(editor): Promise<void> {
+    private getSymbols(document: TextDocument): Thenable<SymbolInformation[]> {
+        return commands.executeCommand<SymbolInformation[]>('vscode.executeDocumentSymbolProvider', document.uri);
+    }
+
+    private async updateSymbols(editor: TextEditor): Promise<void> {
         const tree = new SymbolNode();
         if (editor) {
-            console.log(editor.document.uri);
-            const symbols = await vscode.commands.executeCommand<vscode.SymbolInformation[]>('vscode.executeDocumentSymbolProvider', editor.document.uri);
-            symbols.reduce((map, symbol) => {
+            const symbols = await this.getSymbols(editor.document);
+            symbols.reduce((knownContainerScopes, symbol) => {
                 let parent: SymbolNode;
                 const node = new SymbolNode(symbol);
-                if (symbol.containerName === '') {
-                    parent = tree;
-                    map = {[symbol.name]: node};
-                } else if (symbol.containerName in map) {
-                    parent = map[symbol.containerName];
-                    map = {...map, [symbol.name]: node};
-                } else {
-                    return map;
+                if (!(symbol.containerName in knownContainerScopes)) {
+                    return knownContainerScopes;
                 }
-                if (symbol.kind === SymbolKind.Variable) {
-                    if (parent.symbol && parent.symbol.kind !== SymbolKind.Class && parent.symbol.kind !== SymbolKind.Interface && parent.symbol.kind !== SymbolKind.Struct) {
-                        return map;
-                    }
-                }
+                parent = knownContainerScopes[symbol.containerName];
                 parent.addChild(node);
-                return map;
-            }, {});
+                return {...knownContainerScopes, [symbol.name]: node};
+            }, {'': tree});
         }
+        tree.sort();
         this.tree = tree;
         this._onDidChangeTreeData.fire();
     }
 
 
-    constructor(context: vscode.ExtensionContext) {
+    constructor(context: ExtensionContext) {
         this.context = context;
-		vscode.window.onDidChangeActiveTextEditor(editor => {
+		window.onDidChangeActiveTextEditor((editor) => {
             this.updateSymbols(editor);
 		});
-		this.updateSymbols(vscode.window.activeTextEditor);
 	}
 
-    getChildren(node?: SymbolNode): Thenable<SymbolNode[]> {
+    async getChildren(node?: SymbolNode): Promise<SymbolNode[]> {
 		if (node) {
-			return Promise.resolve(node.children);
+			return node.children;
 		} else {
-			return Promise.resolve(this.tree ? this.tree.children : []);
+            if (!this.tree) {
+                await this.updateSymbols(window.activeTextEditor);
+            }
+			return this.tree.children;
 		}
 	}
 
     private getIcon(kind: SymbolKind): string {
-        let icon;
-        if (kind === SymbolKind.Class) {
-            icon = 'icon-class.svg';
-        } else if (kind === SymbolKind.Constructor || kind === SymbolKind.Function || kind === SymbolKind.Method) {
-            icon = 'icon-function.svg';
-        } else if (kind === SymbolKind.Module) {
-            icon = 'icon-module.svg';
-        } else if (kind === SymbolKind.Property) {
-            icon = 'icon-property.svg';
-        } else {
-            icon = 'icon-variable.svg';
-        }
-        if (icon) {
-            return this.context.asAbsolutePath(path.join('resources', icon));
-        }
+        let icon: string;
+        switch (kind) {
+            case SymbolKind.Class:
+                icon = 'icon-class.svg';
+                break;
+            case SymbolKind.Constructor:
+            case SymbolKind.Function:
+            case SymbolKind.Method:
+                icon = 'icon-function.svg';
+                break;
+            case SymbolKind.Module:
+                icon = 'icon-module.svg';
+                break;
+            case SymbolKind.Property:
+                icon = 'icon-property.svg';
+                break;
+            default:
+                icon = 'icon-variable.svg';
+                break;
+        };
+        return this.context.asAbsolutePath(path.join('resources', icon));
     }
 
-    getTreeItem(node: SymbolNode): vscode.TreeItem {
+    getTreeItem(node: SymbolNode): TreeItem {
         const { kind } = node.symbol;
-		let treeItem: vscode.TreeItem = new vscode.TreeItem(node.symbol.name, node.children.length ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None);
+		let treeItem = new TreeItem(node.symbol.name);
+        treeItem.collapsibleState = node.children.length ? TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None;
         treeItem.command = {
 			command: 'revealLine',
 			title: '',

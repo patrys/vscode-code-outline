@@ -81,27 +81,25 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         }, {'': tree});
         tree.sort();
         this.tree = tree;
-        this._onDidChangeTreeData.fire();
     }
-
 
     constructor(context: ExtensionContext) {
         this.context = context;
-		window.onDidChangeActiveTextEditor((editor) => {
-            this.updateSymbols(editor);
-		});
-	}
+        window.onDidChangeActiveTextEditor((editor) => {
+            if (editor) {
+                this._onDidChangeTreeData.fire();
+            }
+        });
+    }
 
     async getChildren(node?: SymbolNode): Promise<SymbolNode[]> {
-		if (node) {
-			return node.children;
-		} else {
-            if (!this.tree) {
-                await this.updateSymbols(window.activeTextEditor);
-            }
-			return this.tree.children;
-		}
-	}
+        if (node) {
+            return node.children;
+        } else {
+            await this.updateSymbols(window.activeTextEditor);
+            return this.tree.children;
+        }
+    }
 
     private getIcon(kind: SymbolKind): string {
         let icon: string;
@@ -129,14 +127,18 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
 
     getTreeItem(node: SymbolNode): TreeItem {
         const { kind } = node.symbol;
-		let treeItem = new TreeItem(node.symbol.name);
+        let treeItem = new TreeItem(node.symbol.name);
         treeItem.collapsibleState = node.children.length ? TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None;
         treeItem.command = {
-			command: 'symbolOutline.revealRange',
+            command: 'symbolOutline.revealRange',
             title: '',
-			arguments: [this.editor, node.symbol.location.range]
-		};
+            arguments: [this.editor, node.symbol.location.range]
+        };
         treeItem.iconPath = this.getIcon(kind);
-		return treeItem;
-	}
+        return treeItem;
+    }
+
+    refresh() {
+        this._onDidChangeTreeData.fire();
+    }
 }

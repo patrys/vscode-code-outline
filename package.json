@@ -2,8 +2,13 @@
     "name": "vscode-code-outline",
     "displayName": "Code Outline",
     "description": "A code outline tree provider for VSCode",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "patrys",
+    "homepage": "https://github.com/patrys/vscode-code-outline",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/patrys/vscode-code-outline"
+    },
     "engines": {
         "vscode": "^1.13.0"
     },
@@ -15,11 +20,27 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
+        "commands": [
+            {
+                "command": "symbolOutline.refresh",
+                "title": "Refresh",
+                "icon": "resources/icon-refresh.svg"
+            }
+        ],
         "views": {
             "explorer": [
                 {
                     "id": "symbolOutline",
                     "name": "Code Outline"
+                }
+            ]
+        },
+        "menus": {
+            "view/title": [
+                {
+                    "command": "symbolOutline.refresh",
+                    "when": "view == symbolOutline",
+                    "group": "navigation"
                 }
             ]
         }

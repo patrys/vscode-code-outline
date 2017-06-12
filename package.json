@@ -16,13 +16,13 @@
     "main": "./out/src/extension",
     "contributes": {
         "views": {
-			"explorer": [
-				{
-					"id": "symbolOutline",
-					"name": "Code Outline"
-				}
-			]
-		}
+            "explorer": [
+                {
+                    "id": "symbolOutline",
+                    "name": "Code Outline"
+                }
+            ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",

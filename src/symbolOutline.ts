@@ -56,26 +56,29 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
 
     private context: ExtensionContext;
     private tree: SymbolNode;
+    private editor: TextEditor;
 
     private getSymbols(document: TextDocument): Thenable<SymbolInformation[]> {
         return commands.executeCommand<SymbolInformation[]>('vscode.executeDocumentSymbolProvider', document.uri);
     }
 
     private async updateSymbols(editor: TextEditor): Promise<void> {
-        const tree = new SymbolNode();
-        if (editor) {
-            const symbols = await this.getSymbols(editor.document);
-            symbols.reduce((knownContainerScopes, symbol) => {
-                let parent: SymbolNode;
-                const node = new SymbolNode(symbol);
-                if (!(symbol.containerName in knownContainerScopes)) {
-                    return knownContainerScopes;
-                }
-                parent = knownContainerScopes[symbol.containerName];
-                parent.addChild(node);
-                return {...knownContainerScopes, [symbol.name]: node};
-            }, {'': tree});
+        if (!editor) {
+            return;
         }
+        const tree = new SymbolNode();
+        this.editor = editor;
+        const symbols = await this.getSymbols(editor.document);
+        symbols.reduce((knownContainerScopes, symbol) => {
+            let parent: SymbolNode;
+            const node = new SymbolNode(symbol);
+            if (!(symbol.containerName in knownContainerScopes)) {
+                return knownContainerScopes;
+            }
+            parent = knownContainerScopes[symbol.containerName];
+            parent.addChild(node);
+            return {...knownContainerScopes, [symbol.name]: node};
+        }, {'': tree});
         tree.sort();
         this.tree = tree;
         this._onDidChangeTreeData.fire();
@@ -129,9 +132,9 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
 		let treeItem = new TreeItem(node.symbol.name);
         treeItem.collapsibleState = node.children.length ? TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None;
         treeItem.command = {
-			command: 'revealLine',
-			title: '',
-			arguments: [{lineNumber: node.symbol.location.range.start.line, at: 'center'}]
+			command: 'symbolOutline.revealRange',
+            title: '',
+			arguments: [this.editor, node.symbol.location.range]
 		};
         treeItem.iconPath = this.getIcon(kind);
 		return treeItem;

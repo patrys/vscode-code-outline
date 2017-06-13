@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.0.6
+- Fix some icons being raster bitmaps
+
 ## 0.0.5
 - Refresh the outline when the document is saved or reloaded from disk
 

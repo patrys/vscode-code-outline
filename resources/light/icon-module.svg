@@ -5,12 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   version="1.1"
-   id="svg4279"
-   viewBox="0 0 20 20"
+   width="20"
    height="20"
-   width="20">
+   viewBox="0 0 20 20"
+   id="svg4279"
+   version="1.1">
   <defs
      id="defs4281" />
   <metadata
@@ -26,26 +25,15 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(0,-1032.3622)"
-     id="layer1">
-    <g
-       transform="translate(90,1018.5714)"
-       id="g4298">
-      <image
-         y="17.790771"
-         x="-86"
-         id="image4295"
-         xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAA3NCSVQICAjb4U/gAAABBklEQVQY
-lWWRMa6DQAxExw4biYpTQO5Bk5TZkrslDXQcBkKbnIJmvcIr/IvN10f6U7nwzMjPZGZmpqr7vptZ
-WZYARISImNk5R0QMQFX7vu+6Dgd1XTcMg6oCgJmJyPV6fb1eIYQcHEKY5/l2u4mImXHeU9WmaXIX
-gLIsL5fLtm1mBoBV9f1+V1XFzMc6Zq6q6vP5qCpCCG3bjuOYUrKDUkrDMLRtG0L4umOM+Kd937+T
-qi7L4r2PMR6TYoze+2VZVJWLoqjrel3XP99vzLqudV0XRcEAiMg5N02TiOQNEZmm6Xw+E9GX07Zt
-j8fjfr8fOXnvn89npkCZREopX3d8y+l0cs4B+AHNBtkXAkBBzAAAAABJRU5ErkJggg==
-"
-         style="image-rendering:optimizeSpeed"
-         preserveAspectRatio="none"
-         height="12"
-         width="12" />
-    </g>
+     transform="translate(-7.372881,3.898305)"
+     id="g8925">
+    <path
+       style="fill:#f6f6f6"
+       d="m 18.372881,9.1016949 1,0 0,-1 c 0,-0.537 0.741,-1.613 1,-2 -0.259,-0.389 -1,-1.467 -1,-2 l 0,-1 -1,0 0,-2.99999998 1,0 c 1.969,0.021 3,1.27699998 3,2.99999998 l 0,1 1,1 0,2 -1,1 0,1 c 0,1.7090001 -1.031,2.9790001 -3,3.0000001 l -1,0 0,-3.0000001 z m -2,0 -1,0 0,-1 c 0,-0.537 -0.741,-1.613 -1,-2 0.259,-0.389 1,-1.467 1,-2 l 0,-1 1,0 0,-2.99999998 -1,0 c -1.969,0.021 -3,1.27699998 -3,2.99999998 l 0,1 -1,1 0,2 1,1 0,1 c 0,1.7090001 1.317,2.9790001 3.286,3.0000001 l 0.714,0 0,-3.0000001 z"
+       id="path4400" />
+    <path
+       style="fill:#424242"
+       d="m 20.372881,9.1016949 0,-1 c 0,-0.834 0.496,-1.738 1,-2 -0.504,-0.27 -1,-1.168 -1,-2 l 0,-1 c 0,-0.84 -0.584,-1 -1,-1 l 0,-1 c 2.083,0 2,1.166 2,2 l 0,1 c 0,0.969 0.703,0.98 1,1 l 0,2 c -0.322,0.02 -1,0.053 -1,1 l 0,1 c 0,0.834 0.083,2.0000001 -2,2.0000001 l 0,-1 c 0.833,0 1,-1.0000001 1,-1.0000001 z m -6,0 0,-1 c 0,-0.834 -0.496,-1.738 -1,-2 0.504,-0.27 1,-1.168 1,-2 l 0,-1 c 0,-0.84 0.584,-1 1,-1 l 0,-1 c -2.083,0 -2,1.166 -2,2 l 0,1 c 0,0.969 -0.703,0.98 -1,1 l 0,2 c 0.322,0.02 1,0.053 1,1 l 0,1 c 0,0.834 -0.083,2.0000001 2,2.0000001 l 0,-1 c -0.833,0 -1,-1.0000001 -1,-1.0000001 z"
+       id="path4402" />
   </g>
 </svg>

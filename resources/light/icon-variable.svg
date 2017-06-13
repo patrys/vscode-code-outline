@@ -5,12 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   version="1.1"
-   id="svg4459"
-   viewBox="0 0 20 20"
+   width="20"
    height="20"
-   width="20">
+   viewBox="0 0 20 20"
+   id="svg4459"
+   version="1.1">
   <defs
      id="defs4461" />
   <metadata
@@ -26,20 +25,19 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(0,-1032.3622)"
-     id="layer1">
-    <g
-       transform="translate(224.28572,870)"
-       id="g4478">
-      <image
-         y="166.8622"
-         x="-220.28572"
-         id="image4475"
-         xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAIAAADEEvsIAAAAA3NCSVQICAjb4U/gAAAA2ElEQVQY lWP8//8/AxL4+/fv79+/GRgYWFhYWFhYIIIsaNJHb75qW3/5+6+/1YG6zrqSEKWM////R5ZWEuOp CdBhZmbs3Xr95J23UKU/fvyAS89LsxDgYmVgYPj88w8DA8PxW699Ovd9WxzF8v//f5fm3QwMDOqu asxMDJ9//G7beG367lvIDmX89u0bV+wyBtzg2+IoJjzScMCCR85STbQ6UJeRkZHx+/fvEIfvu/IC TdpZV5KVlZWZmRkRBIeuv2xZe4mBgaEmWM9OUxw5MBnhIY41rCEAAO2tdoo5MezsAAAAAElFTkSu QmCC "
-         style="image-rendering:optimizeSpeed"
-         preserveAspectRatio="none"
-         height="11"
-         width="12" />
-    </g>
+     transform="translate(-5.0847459,1.9491527)"
+     id="g7674">
+    <path
+       style="fill:#f6f6f6"
+       d="m 16.347746,2.5508475 4.737,2.369 0,5.2359995 -6.791,3.395 -0.42,0 -4.7890002,-2.395 0,-5.2359995 6.7390002,-3.369 0.524,0 z"
+       id="path4434" />
+    <path
+       style="fill:#00539c"
+       d="m 10.084746,6.5508475 0,3.9999995 4,2 6,-2.9999995 0,-4 -4,-2 -6,3 z m 4,1 -2,-1 4,-2 2,1 -4,2 z"
+       id="path4436" />
+    <path
+       style="fill:#f0eff1"
+       d="m 16.084746,4.5508475 2,1 -4,2 -2,-1 4,-2 z"
+       id="path4438" />
   </g>
 </svg>

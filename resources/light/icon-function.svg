@@ -5,12 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   version="1.1"
-   id="svg4152"
-   viewBox="0 0 20 20"
+   width="20"
    height="20"
-   width="20">
+   viewBox="0 0 20 20"
+   id="svg4152"
+   version="1.1">
   <defs
      id="defs4154" />
   <metadata
@@ -26,27 +25,31 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(0,-1032.3622)"
-     id="layer1">
-    <g
-       transform="translate(-1215.7142,1121.4286)"
-       id="g4171">
-      <image
-         y="-85.066368"
-         x="1220.2142"
-         id="image4168"
-         xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAMCAIAAAA7y9DJAAAAA3NCSVQICAjb4U/gAAABJ0lEQVQY
-lWP8//8/Awz8/v37z58/LCwsrKyscEEmCPXv378fP36c2XmrNXTVoTVXvn//8ffvX4gU479///78
-+fPi4bvVnUe4+Nm90ky2zTrz7ePP0HIbcTlBVlZWhu/fv2+eebzEac6lo3c/vP8IQddO3S9zmbN5
-5vHv378z/f//f9OUkyxszAyogIWNedOUk////4e6o2xJ4PVjj5a3HPr46tvylkPn99wvWRgAVQp1
-MDOje4rRuxdfWkJWVq4KFZLgwfDL3/8MDAwQCQgJEWFgYGBiZGT0yzVvC1vz6NobuL5nt991RKzx
-yzFnZGRE8m3XEU4etvN77hm6KH3//Avh2//////////v37/fv38/uOZird/Cg2sufv/+/c+fPxAp
-RoKhDgCFXq+ToQyh1AAAAABJRU5ErkJggg==
-"
-         style="image-rendering:optimizeSpeed"
-         preserveAspectRatio="none"
-         height="12"
-         width="11" />
-    </g>
+     transform="translate(1.6101695,-0.33898305)"
+     id="g6423">
+    <polygon
+       transform="translate(0.88983051,0.33898305)"
+       style="fill:#f6f6f6"
+       points="7.209,4 2,7.308 2,12.692 7.209,16 7.791,16 13,12.692 13,7.308 7.791,4 "
+       id="polygon4456" />
+    <path
+       style="fill:#652d90"
+       d="m 8.3898305,5.3389831 -4.5,2.857 0,4.2849999 4.5,2.858 4.5000005,-2.857 0,-4.2859999 -4.5000005,-2.857 z m -0.5,8.4979999 -3,-1.905 0,-2.8159999 3,1.9049999 0,2.816 z m -2.358,-5.4979999 2.858,-1.815 2.8580005,1.815 -2.8580005,1.8149999 -2.858,-1.8149999 z m 6.3580005,3.5929999 -3.0000005,1.905 0,-2.815 3.0000005,-1.9049999 0,2.8149999 z"
+       id="path4458" />
+    <polygon
+       transform="translate(0.88983051,0.33898305)"
+       style="fill:#f0eff1"
+       points="7.5,6.185 10.358,8 7.5,9.815 4.642,8 "
+       id="polygon4460" />
+    <polygon
+       transform="translate(0.88983051,0.33898305)"
+       style="fill:#f0eff1"
+       points="4,11.593 4,8.777 7,10.683 7,13.498 "
+       id="polygon4462" />
+    <polygon
+       transform="translate(0.88983051,0.33898305)"
+       style="fill:#f0eff1"
+       points="11,11.593 8,13.498 8,10.683 11,8.777 "
+       id="polygon4464" />
   </g>
 </svg>

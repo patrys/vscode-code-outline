@@ -101,28 +101,40 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         }
     }
 
-    private getIcon(kind: SymbolKind): string {
+    private getIcon(kind: SymbolKind): {dark: string; light: string} {
         let icon: string;
         switch (kind) {
             case SymbolKind.Class:
-                icon = 'icon-class.svg';
+                icon = 'class';
+                break;
+            case SymbolKind.Constant:
+                icon = 'constant';
                 break;
             case SymbolKind.Constructor:
             case SymbolKind.Function:
             case SymbolKind.Method:
-                icon = 'icon-function.svg';
+                icon = 'function';
                 break;
+            case SymbolKind.Interface:
+                icon = 'interface';
             case SymbolKind.Module:
-                icon = 'icon-module.svg';
+            case SymbolKind.Namespace:
+            case SymbolKind.Object:
+            case SymbolKind.Package:
+                icon = 'module';
                 break;
             case SymbolKind.Property:
-                icon = 'icon-property.svg';
+                icon = 'property';
                 break;
             default:
-                icon = 'icon-variable.svg';
+                icon = 'variable';
                 break;
         };
-        return this.context.asAbsolutePath(path.join('resources', icon));
+        icon = `icon-${icon}.svg`;
+        return {
+            dark: this.context.asAbsolutePath(path.join('resources', 'dark', icon)),
+            light: this.context.asAbsolutePath(path.join('resources', 'light', icon))
+        };
     }
 
     getTreeItem(node: SymbolNode): TreeItem {

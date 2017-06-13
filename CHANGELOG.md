@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.4]
+- Better icon consistency with VSCode
+- Support for light themes
+
 ## [0.0.3]
 - Added a refresh button
 

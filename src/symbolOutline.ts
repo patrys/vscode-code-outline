@@ -107,7 +107,9 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
             return node.children;
         } else {
             await this.updateSymbols(window.activeTextEditor);
-            return this.tree.children;
+            if (this.tree) {
+                return this.tree.children;
+            }
         }
     }
 

@@ -63,23 +63,22 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
     }
 
     private async updateSymbols(editor: TextEditor): Promise<void> {
-        if (!editor) {
-            return;
-        }
         const tree = new SymbolNode();
         this.editor = editor;
-        const symbols = await this.getSymbols(editor.document);
-        symbols.reduce((knownContainerScopes, symbol) => {
-            let parent: SymbolNode;
-            const node = new SymbolNode(symbol);
-            if (!(symbol.containerName in knownContainerScopes)) {
-                return knownContainerScopes;
-            }
-            parent = knownContainerScopes[symbol.containerName];
-            parent.addChild(node);
-            return {...knownContainerScopes, [symbol.name]: node};
-        }, {'': tree});
-        tree.sort();
+        if (editor) {
+            const symbols = await this.getSymbols(editor.document);
+            symbols.reduce((knownContainerScopes, symbol) => {
+                let parent: SymbolNode;
+                const node = new SymbolNode(symbol);
+                if (!(symbol.containerName in knownContainerScopes)) {
+                    return knownContainerScopes;
+                }
+                parent = knownContainerScopes[symbol.containerName];
+                parent.addChild(node);
+                return {...knownContainerScopes, [symbol.name]: node};
+            }, {'': tree});
+            tree.sort();
+        }
         this.tree = tree;
     }
 
@@ -87,17 +86,22 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         this.context = context;
         window.onDidChangeActiveTextEditor(editor => {
             if (editor) {
-                this._onDidChangeTreeData.fire();
+                this.refresh();
+            }
+        });
+        workspace.onDidCloseTextDocument(document => {
+            if (!this.editor.document) {
+                this.refresh();
             }
         });
         workspace.onDidChangeTextDocument(event => {
             if (!event.document.isDirty && event.document === this.editor.document) {
-                this._onDidChangeTreeData.fire();
+                this.refresh();
             }
         });
         workspace.onDidSaveTextDocument(document => {
             if (document === this.editor.document) {
-                this._onDidChangeTreeData.fire();
+                this.refresh();
             }
         });
     }
@@ -107,9 +111,7 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
             return node.children;
         } else {
             await this.updateSymbols(window.activeTextEditor);
-            if (this.tree) {
-                return this.tree.children;
-            }
+            return this.tree ? this.tree.children : [];
         }
     }
 

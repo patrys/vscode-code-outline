@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.7
+- Clear the tree when editor is closed
+- Fix `Cannot read property 'children' of undefined` error
+
 ## 0.0.6
 - Fix some icons being raster bitmaps
 

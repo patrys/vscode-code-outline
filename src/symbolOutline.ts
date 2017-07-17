@@ -68,12 +68,12 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         if (editor) {
             const symbols = await this.getSymbols(editor.document);
             symbols.reduce((knownContainerScopes, symbol) => {
-                let parent: SymbolNode;
-                const node = new SymbolNode(symbol);
-                if (!(symbol.containerName in knownContainerScopes)) {
-                    return knownContainerScopes;
+                let parent: SymbolNode = knownContainerScopes[''];
+                if (symbol.containerName in knownContainerScopes) {
+                    parent = knownContainerScopes[symbol.containerName];
                 }
-                parent = knownContainerScopes[symbol.containerName];
+
+                const node = new SymbolNode(symbol);
                 parent.addChild(node);
                 return {...knownContainerScopes, [symbol.name]: node};
             }, {'': tree});

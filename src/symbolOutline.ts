@@ -150,12 +150,10 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         const { kind } = node.symbol;
         let treeItem = new TreeItem(node.symbol.name);
         treeItem.collapsibleState = node.children.length ? TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None;
-        let range = node.symbol.location.range;
-        range = range.with(range.start, range.start);
         treeItem.command = {
             command: 'symbolOutline.revealRange',
             title: '',
-            arguments: [this.editor, range]
+            arguments: [this.editor, node.symbol.location.range]
         };
         treeItem.iconPath = this.getIcon(kind);
         return treeItem;

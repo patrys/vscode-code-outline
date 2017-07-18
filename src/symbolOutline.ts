@@ -1,6 +1,10 @@
 import { Event, EventEmitter, ExtensionContext, SymbolKind, SymbolInformation, TextDocument, TextEditor, TreeDataProvider, TreeItem, TreeItemCollapsibleState, commands, window, workspace } from 'vscode';
 import * as path from 'path';
 
+let optsSortOrder:number[] = [];
+let optsTopLevel:number[] = [];
+let optsDoSort = true;
+
 export class SymbolNode {
     symbol: SymbolInformation;
     children?: SymbolNode[];
@@ -11,22 +15,9 @@ export class SymbolNode {
     }
 
     private getKindOrder(kind: SymbolKind): number {
-        switch (kind) {
-            case SymbolKind.Constructor:
-            case SymbolKind.Function:
-            case SymbolKind.Method:
-                return 3;
-            case SymbolKind.Class:
-                return 2;
-            case SymbolKind.Interface:
-                return 1;
-            case SymbolKind.Constant:
-                return -1;
-            case SymbolKind.Module:
-                return -2;
-            default:
-                return 0;
-        };
+       let ix = optsSortOrder.indexOf(kind);
+       if (ix < 0) ix = optsSortOrder.indexOf(-1);
+       return ix;
     }
 
     private compareSymbols(a: SymbolNode, b: SymbolNode): number {
@@ -66,7 +57,11 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         const tree = new SymbolNode();
         this.editor = editor;
         if (editor) {
-            const symbols = await this.getSymbols(editor.document);
+            readOpts();
+            let symbols = await this.getSymbols(editor.document);
+            if (optsTopLevel.indexOf(-1) < 0) {
+               symbols = symbols.filter((sym) => optsTopLevel.indexOf(sym.kind) >= 0);
+            }
             symbols.reduce((knownContainerScopes, symbol) => {
                 let parent: SymbolNode = knownContainerScopes[''];
                 if (symbol.containerName in knownContainerScopes) {
@@ -77,7 +72,7 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
                 parent.addChild(node);
                 return {...knownContainerScopes, [symbol.name]: node};
             }, {'': tree});
-            tree.sort();
+            if (optsDoSort) tree.sort();
         }
         this.tree = tree;
     }
@@ -167,4 +162,18 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
     refresh() {
         this._onDidChangeTreeData.fire();
     }
+}
+
+function readOpts() {
+   let opts = workspace.getConfiguration("symbolOutline");
+   optsDoSort = opts.get("doSort");
+   optsSortOrder = convertEnumNames(opts.get("sortOrder"));
+   optsTopLevel = convertEnumNames(opts.get("topLevel"));
+}
+
+function convertEnumNames(names:string[]):number[] {
+   return names.map(str => {
+      let v = SymbolKind[str];
+      return typeof v == "undefined" ? -1 : v;
+   });
 }

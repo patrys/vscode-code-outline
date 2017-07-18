@@ -51,7 +51,28 @@
                     "group": "navigation"
                 }
             ]
-        }
+        },
+        "configuration": {
+            "type": "object",
+            "title": "Code Outline configuration",
+            "properties": {
+               "symbolOutline.doSort": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Sort the outline"
+               },
+               "symbolOutline.sortOrder": {
+                  "type": "array",
+                  "default": ["Class", "Module", "Constant", "Interface", "*", "Constructor", "Function", "Method"],
+                  "description": "Order to the sort symbols in, if sorted.  * is placeholder for all symbols not explicitly listed."
+               },
+               "symbolOutline.topLevel": {
+                  "type": "array",
+                  "default": ["*"],
+                  "description": "Which symbols to include at the topmost scope.  * includes everything."
+               }
+            }
+         }
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",

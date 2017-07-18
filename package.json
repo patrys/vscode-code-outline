@@ -9,7 +9,7 @@
         "type": "git",
         "url": "https://github.com/patrys/vscode-code-outline"
     },
-    "icon": "resources/icon.svg",
+    "icon": "resources/icon.png",
     "galleryBanner": {
 		"color": "#292d3e",
 		"theme": "dark"

@@ -1,8 +1,8 @@
 import { Event, EventEmitter, ExtensionContext, SymbolKind, SymbolInformation, TextDocument, TextEditor, TreeDataProvider, TreeItem, TreeItemCollapsibleState, commands, window, workspace } from 'vscode';
 import * as path from 'path';
 
-let optsSortOrder:number[] = [];
-let optsTopLevel:number[] = [];
+let optsSortOrder: number[] = [];
+let optsTopLevel: number[] = [];
 let optsDoSort = true;
 
 export class SymbolNode {
@@ -15,9 +15,11 @@ export class SymbolNode {
     }
 
     private getKindOrder(kind: SymbolKind): number {
-       let ix = optsSortOrder.indexOf(kind);
-       if (ix < 0) ix = optsSortOrder.indexOf(-1);
-       return ix;
+        let ix = optsSortOrder.indexOf(kind);
+        if (ix < 0) {
+            ix = optsSortOrder.indexOf(-1);
+        }
+        return ix;
     }
 
     private compareSymbols(a: SymbolNode, b: SymbolNode): number {
@@ -33,7 +35,7 @@ export class SymbolNode {
 
     sort() {
         this.children.sort(this.compareSymbols.bind(this));
-        this.children.forEach((child) => child.sort());
+        this.children.forEach(child => child.sort());
     }
 
     addChild(child: SymbolNode) {
@@ -60,7 +62,7 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
             readOpts();
             let symbols = await this.getSymbols(editor.document);
             if (optsTopLevel.indexOf(-1) < 0) {
-               symbols = symbols.filter((sym) => optsTopLevel.indexOf(sym.kind) >= 0);
+               symbols = symbols.filter(sym => optsTopLevel.indexOf(sym.kind) >= 0);
             }
             symbols.reduce((knownContainerScopes, symbol) => {
                 let parent: SymbolNode = knownContainerScopes[''];
@@ -166,9 +168,9 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
 
 function readOpts() {
    let opts = workspace.getConfiguration("symbolOutline");
-   optsDoSort = opts.get("doSort");
-   optsSortOrder = convertEnumNames(opts.get("sortOrder"));
-   optsTopLevel = convertEnumNames(opts.get("topLevel"));
+   optsDoSort = opts.get<boolean>("doSort");
+   optsSortOrder = convertEnumNames(opts.get<string[]>("sortOrder"));
+   optsTopLevel = convertEnumNames(opts.get<string[]>("topLevel"));
 }
 
 function convertEnumNames(names:string[]):number[] {

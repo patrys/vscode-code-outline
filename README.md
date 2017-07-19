@@ -12,7 +12,30 @@ The necessary APIs are only available in VSCode version 1.13 and up.
 
 ## Extension Settings
 
-There are currently no settings.
+Default settings:
+
+```json
+{
+  "symbolOutline.doSort": true,
+  "symbolOutline.sortOrder": [
+    "Class",
+    "Module",
+    "Constant",
+    "Interface",
+    "*",
+    "Constructor",
+    "Function",
+    "Method"
+  ],
+  "symbolOutline.topLevel": [
+    "*"
+  ]
+}
+```
+
+- **doSort:** sort the outline.
+- **sortOrder:** order to the sort symbols.
+- **topLevel:** wich symbols include at the topmost scope.
 
 ## Known Issues
 

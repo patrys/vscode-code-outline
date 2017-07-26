@@ -61,6 +61,11 @@
                     "default": true,
                     "description": "Sort the outline"
                 },
+                "symbolOutline.doSelect": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Select the code segment by selecting item."
+                },
                 "symbolOutline.sortOrder": {
                     "type": "array",
                     "default": [

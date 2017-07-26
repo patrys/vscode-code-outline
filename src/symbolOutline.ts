@@ -1,9 +1,10 @@
-import { Event, EventEmitter, ExtensionContext, SymbolKind, SymbolInformation, TextDocument, TextEditor, TreeDataProvider, TreeItem, TreeItemCollapsibleState, commands, window, workspace } from 'vscode';
+import { Range, Event, EventEmitter, ExtensionContext, SymbolKind, SymbolInformation, TextDocument, TextEditor, TreeDataProvider, TreeItem, TreeItemCollapsibleState, commands, window, workspace } from 'vscode';
 import * as path from 'path';
 
 let optsSortOrder: number[] = [];
 let optsTopLevel: number[] = [];
 let optsDoSort = true;
+let optsDoSelect = true;
 
 export class SymbolNode {
     symbol: SymbolInformation;
@@ -152,11 +153,19 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         const { kind } = node.symbol;
         let treeItem = new TreeItem(node.symbol.name);
         treeItem.collapsibleState = node.children.length ? TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None;
+
         treeItem.command = {
             command: 'symbolOutline.revealRange',
             title: '',
-            arguments: [this.editor, node.symbol.location.range]
+            arguments: [
+                this.editor,
+                optsDoSelect ? node.symbol.location.range : new Range(
+                    node.symbol.location.range.start,
+                    node.symbol.location.range.start
+                )
+            ]
         };
+
         treeItem.iconPath = this.getIcon(kind);
         return treeItem;
     }
@@ -169,6 +178,7 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
 function readOpts() {
    let opts = workspace.getConfiguration("symbolOutline");
    optsDoSort = opts.get<boolean>("doSort");
+   optsDoSelect = opts.get<boolean>("doSelect");
    optsSortOrder = convertEnumNames(opts.get<string[]>("sortOrder"));
    optsTopLevel = convertEnumNames(opts.get<string[]>("topLevel"));
 }

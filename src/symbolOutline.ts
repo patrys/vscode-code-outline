@@ -5,6 +5,7 @@ let optsSortOrder: number[] = [];
 let optsTopLevel: number[] = [];
 let optsDoSort = true;
 let optsDoSelect = true;
+let optsAutoExpend = true;
 
 export class SymbolNode {
     symbol: SymbolInformation;
@@ -152,7 +153,28 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
     getTreeItem(node: SymbolNode): TreeItem {
         const { kind } = node.symbol;
         let treeItem = new TreeItem(node.symbol.name);
-        treeItem.collapsibleState = node.children.length ? TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None;
+
+        if (optsAutoExpend && node.children.length) {
+
+            switch (kind) {
+            case SymbolKind.Module:
+            case SymbolKind.Namespace:
+            case SymbolKind.Object:
+            case SymbolKind.Package:
+            case SymbolKind.Interface:
+            case SymbolKind.Struct:
+            case SymbolKind.Class:
+                treeItem.collapsibleState = TreeItemCollapsibleState.Expanded;
+                break;
+            default:
+                treeItem.collapsibleState = TreeItemCollapsibleState.Collapsed;
+            };
+        }
+        else {
+
+            treeItem.collapsibleState = node.children.length ?
+                TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None;
+        }
 
         treeItem.command = {
             command: 'symbolOutline.revealRange',
@@ -179,6 +201,7 @@ function readOpts() {
    let opts = workspace.getConfiguration("symbolOutline");
    optsDoSort = opts.get<boolean>("doSort");
    optsDoSelect = opts.get<boolean>("doSelect");
+   optsAutoExpend = opts.get<boolean>("autoExpend");
    optsSortOrder = convertEnumNames(opts.get<string[]>("sortOrder"));
    optsTopLevel = convertEnumNames(opts.get<string[]>("topLevel"));
 }

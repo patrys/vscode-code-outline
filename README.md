@@ -17,6 +17,8 @@ Default settings:
 ```json
 {
   "symbolOutline.doSort": true,
+  "symbolOutline.doSelect": true,
+  "symbolOutline.autoExpend": true,
   "symbolOutline.sortOrder": [
     "Class",
     "Module",
@@ -34,6 +36,8 @@ Default settings:
 ```
 
 - **doSort:** sort the outline.
+- **doSelect:** select the code segment by selecting item.
+- **autoExpend:** auto expend the tree (except function node).
 - **sortOrder:** order to the sort symbols.
 - **topLevel:** wich symbols include at the topmost scope.
 

@@ -61,10 +61,10 @@
                     "default": true,
                     "description": "Sort the outline"
                 },
-                "symbolOutline.autoExpend": {
+                "symbolOutline.autoExpand": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Auto expend the tree (except function node)."
+                    "description": "Auto expand the tree (except function node)."
                 },
                 "symbolOutline.doSelect": {
                     "type": "boolean",

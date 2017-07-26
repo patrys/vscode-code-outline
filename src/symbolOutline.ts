@@ -5,7 +5,7 @@ let optsSortOrder: number[] = [];
 let optsTopLevel: number[] = [];
 let optsDoSort = true;
 let optsDoSelect = true;
-let optsAutoExpend = true;
+let optsAutoExpand = true;
 
 export class SymbolNode {
     symbol: SymbolInformation;
@@ -154,7 +154,7 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         const { kind } = node.symbol;
         let treeItem = new TreeItem(node.symbol.name);
 
-        if (optsAutoExpend && node.children.length) {
+        if (optsAutoExpand && node.children.length) {
 
             switch (kind) {
             case SymbolKind.Module:
@@ -201,7 +201,7 @@ function readOpts() {
    let opts = workspace.getConfiguration("symbolOutline");
    optsDoSort = opts.get<boolean>("doSort");
    optsDoSelect = opts.get<boolean>("doSelect");
-   optsAutoExpend = opts.get<boolean>("autoExpend");
+   optsAutoExpand = opts.get<boolean>("autoExpand");
    optsSortOrder = convertEnumNames(opts.get<string[]>("sortOrder"));
    optsTopLevel = convertEnumNames(opts.get<string[]>("topLevel"));
 }

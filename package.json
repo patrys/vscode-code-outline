@@ -61,10 +61,18 @@
                     "default": true,
                     "description": "Sort the outline"
                 },
-                "symbolOutline.autoExpand": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Auto expand the tree (except function node)."
+                "symbolOutline.expandNodes": {
+                    "type": "array",
+                    "default": [
+                        "Module",
+                        "Class",
+                        "Interface",
+                        "Namespace",
+                        "Object",
+                        "Package",
+                        "Struct"
+                    ],
+                    "description": "Kinds of nodes to be expanded automatically."
                 },
                 "symbolOutline.doSelect": {
                     "type": "boolean",

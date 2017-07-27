@@ -3,9 +3,9 @@ import * as path from 'path';
 
 let optsSortOrder: number[] = [];
 let optsTopLevel: number[] = [];
+let optsExpandNodes: number[] = [];
 let optsDoSort = true;
 let optsDoSelect = true;
-let optsAutoExpand = true;
 
 export class SymbolNode {
     symbol: SymbolInformation;
@@ -14,6 +14,18 @@ export class SymbolNode {
     constructor(symbol?: SymbolInformation) {
         this.children = [];
         this.symbol = symbol;
+    }
+
+    /**
+     * Judge if a node should be expanded automatically.
+     * @param kind 
+     */
+    public static shouldAutoExpand(kind: SymbolKind): boolean {
+        let ix = optsExpandNodes.indexOf(kind);
+        if (ix < 0) {
+            ix = optsExpandNodes.indexOf(-1);
+        }
+        return ix > -1;
     }
 
     private getKindOrder(kind: SymbolKind): number {
@@ -154,26 +166,14 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         const { kind } = node.symbol;
         let treeItem = new TreeItem(node.symbol.name);
 
-        if (optsAutoExpand && node.children.length) {
+        if (node.children.length) {
 
-            switch (kind) {
-            case SymbolKind.Module:
-            case SymbolKind.Namespace:
-            case SymbolKind.Object:
-            case SymbolKind.Package:
-            case SymbolKind.Interface:
-            case SymbolKind.Struct:
-            case SymbolKind.Class:
-                treeItem.collapsibleState = TreeItemCollapsibleState.Expanded;
-                break;
-            default:
-                treeItem.collapsibleState = TreeItemCollapsibleState.Collapsed;
-            };
+            treeItem.collapsibleState = optsExpandNodes.length && SymbolNode.shouldAutoExpand(kind) ?
+                TreeItemCollapsibleState.Expanded : TreeItemCollapsibleState.Collapsed;
         }
         else {
 
-            treeItem.collapsibleState = node.children.length ?
-                TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None;
+            treeItem.collapsibleState = TreeItemCollapsibleState.None;
         }
 
         treeItem.command = {
@@ -201,7 +201,7 @@ function readOpts() {
    let opts = workspace.getConfiguration("symbolOutline");
    optsDoSort = opts.get<boolean>("doSort");
    optsDoSelect = opts.get<boolean>("doSelect");
-   optsAutoExpand = opts.get<boolean>("autoExpand");
+   optsExpandNodes = convertEnumNames(opts.get<string[]>("expandNodes"));
    optsSortOrder = convertEnumNames(opts.get<string[]>("sortOrder"));
    optsTopLevel = convertEnumNames(opts.get<string[]>("topLevel"));
 }

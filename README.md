@@ -40,7 +40,3 @@ Default settings:
 ## Known Issues
 
 Depending on other extensions you have installed the symbol list may initially return an empty list. Use the "Refresh" button next to the title to fix this.
-
-## Release Notes
-
-TBD

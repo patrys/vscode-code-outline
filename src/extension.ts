@@ -9,10 +9,9 @@ export function activate(context: vscode.ExtensionContext) {
         symbolOutlineProvider.refresh()
     });
     vscode.commands.registerCommand('symbolOutline.revealRange', (editor: vscode.TextEditor, range: vscode.Range) => {
-        editor.revealRange(
-            range, vscode.TextEditorRevealType.InCenterIfOutsideViewport);
+        editor.revealRange(range, vscode.TextEditorRevealType.Default);
         editor.selection = new vscode.Selection(range.start, range.end);
-        vscode.window.showTextDocument(editor.document);
+        vscode.commands.executeCommand('workbench.action.focusActiveEditorGroup');
     });
 }
 

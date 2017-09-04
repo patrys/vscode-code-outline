@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.9
+
+- Improved scrolling and correct handling for split editing
+
 ## 0.0.8
 
 - Sorting is now configurable and you can filter top-level symbols ([#28 by @sceutre](https://github.com/patrys/vscode-code-outline/pull/28))

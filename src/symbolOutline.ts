@@ -1,9 +1,11 @@
-import { Event, EventEmitter, ExtensionContext, SymbolKind, SymbolInformation, TextDocument, TextEditor, TreeDataProvider, TreeItem, TreeItemCollapsibleState, commands, window, workspace } from 'vscode';
+import { Range, Event, EventEmitter, ExtensionContext, SymbolKind, SymbolInformation, TextDocument, TextEditor, TreeDataProvider, TreeItem, TreeItemCollapsibleState, commands, window, workspace } from 'vscode';
 import * as path from 'path';
 
 let optsSortOrder: number[] = [];
 let optsTopLevel: number[] = [];
+let optsExpandNodes: number[] = [];
 let optsDoSort = true;
+let optsDoSelect = true;
 
 export class SymbolNode {
     symbol: SymbolInformation;
@@ -12,6 +14,18 @@ export class SymbolNode {
     constructor(symbol?: SymbolInformation) {
         this.children = [];
         this.symbol = symbol;
+    }
+
+    /**
+     * Judge if a node should be expanded automatically.
+     * @param kind 
+     */
+    public static shouldAutoExpand(kind: SymbolKind): boolean {
+        let ix = optsExpandNodes.indexOf(kind);
+        if (ix < 0) {
+            ix = optsExpandNodes.indexOf(-1);
+        }
+        return ix > -1;
     }
 
     private getKindOrder(kind: SymbolKind): number {
@@ -151,12 +165,29 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
     getTreeItem(node: SymbolNode): TreeItem {
         const { kind } = node.symbol;
         let treeItem = new TreeItem(node.symbol.name);
-        treeItem.collapsibleState = node.children.length ? TreeItemCollapsibleState.Collapsed : TreeItemCollapsibleState.None;
+
+        if (node.children.length) {
+
+            treeItem.collapsibleState = optsExpandNodes.length && SymbolNode.shouldAutoExpand(kind) ?
+                TreeItemCollapsibleState.Expanded : TreeItemCollapsibleState.Collapsed;
+        }
+        else {
+
+            treeItem.collapsibleState = TreeItemCollapsibleState.None;
+        }
+
         treeItem.command = {
             command: 'symbolOutline.revealRange',
             title: '',
-            arguments: [this.editor, node.symbol.location.range]
+            arguments: [
+                this.editor,
+                optsDoSelect ? node.symbol.location.range : new Range(
+                    node.symbol.location.range.start,
+                    node.symbol.location.range.start
+                )
+            ]
         };
+
         treeItem.iconPath = this.getIcon(kind);
         return treeItem;
     }
@@ -169,6 +200,8 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
 function readOpts() {
    let opts = workspace.getConfiguration("symbolOutline");
    optsDoSort = opts.get<boolean>("doSort");
+   optsDoSelect = opts.get<boolean>("doSelect");
+   optsExpandNodes = convertEnumNames(opts.get<string[]>("expandNodes"));
    optsSortOrder = convertEnumNames(opts.get<string[]>("sortOrder"));
    optsTopLevel = convertEnumNames(opts.get<string[]>("topLevel"));
 }

@@ -61,6 +61,24 @@
                     "default": true,
                     "description": "Sort the outline"
                 },
+                "symbolOutline.expandNodes": {
+                    "type": "array",
+                    "default": [
+                        "Module",
+                        "Class",
+                        "Interface",
+                        "Namespace",
+                        "Object",
+                        "Package",
+                        "Struct"
+                    ],
+                    "description": "Kinds of nodes to be expanded automatically."
+                },
+                "symbolOutline.doSelect": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Select the code segment by selecting item."
+                },
                 "symbolOutline.sortOrder": {
                     "type": "array",
                     "default": [

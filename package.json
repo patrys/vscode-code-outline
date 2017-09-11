@@ -2,7 +2,7 @@
     "name": "vscode-code-outline",
     "displayName": "Code Outline",
     "description": "A code outline tree provider for VSCode",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "publisher": "patrys",
     "homepage": "https://github.com/patrys/vscode-code-outline",
     "repository": {
@@ -58,7 +58,7 @@
             "properties": {
                 "symbolOutline.doSort": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Sort the outline"
                 },
                 "symbolOutline.expandNodes": {

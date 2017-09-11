@@ -18,7 +18,7 @@ export class SymbolNode {
 
     /**
      * Judge if a node should be expanded automatically.
-     * @param kind 
+     * @param kind
      */
     public static shouldAutoExpand(kind: SymbolKind): boolean {
         let ix = optsExpandNodes.indexOf(kind);
@@ -176,15 +176,17 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
             treeItem.collapsibleState = TreeItemCollapsibleState.None;
         }
 
+        const range = optsDoSelect ? node.symbol.location.range : new Range(
+            node.symbol.location.range.start,
+            node.symbol.location.range.start
+        )
+
         treeItem.command = {
             command: 'symbolOutline.revealRange',
             title: '',
             arguments: [
                 this.editor,
-                optsDoSelect ? node.symbol.location.range : new Range(
-                    node.symbol.location.range.start,
-                    node.symbol.location.range.start
-                )
+                range
             ]
         };
 

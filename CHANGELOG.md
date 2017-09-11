@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.0.10
+
+- Expand namespaces, packages, classes and structures by default (can be configured in settings)
+- Default to no sorting (can still be enabled in settings)
+
 ## 0.0.9
 
 - Improved scrolling and correct handling for split editing

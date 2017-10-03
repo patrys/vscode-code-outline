@@ -78,17 +78,26 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
             if (optsTopLevel.indexOf(-1) < 0) {
                symbols = symbols.filter(sym => optsTopLevel.indexOf(sym.kind) >= 0);
             }
-            symbols.reduce((knownContainerScopes, symbol) => {
-                let parent: SymbolNode = knownContainerScopes[''];
-                if (symbol.containerName in knownContainerScopes) {
-                    parent = knownContainerScopes[symbol.containerName];
+            const symbolNodes = symbols.map(symbol => new SymbolNode(symbol));
+            symbolNodes.forEach(currentNode => {
+                const potentialParents = symbolNodes.filter(node => node !== currentNode && node.symbol.location.range.contains(currentNode.symbol.location.range));
+                if (!potentialParents.length) {
+                    tree.addChild(currentNode);
+                    return;
                 }
-
-                const node = new SymbolNode(symbol);
-                parent.addChild(node);
-                return {...knownContainerScopes, [symbol.name]: node};
-            }, {'': tree});
-            if (optsDoSort) tree.sort();
+                potentialParents.sort((a: SymbolNode, b: SymbolNode) => {
+                    const startComparison = b.symbol.location.range.start.compareTo(a.symbol.location.range.start);
+                    if (startComparison != 0) {
+                        return startComparison;
+                    }
+                    return a.symbol.location.range.end.compareTo(b.symbol.location.range.end);
+                });
+                const parent = potentialParents[0];
+                parent.addChild(currentNode);
+            });
+            if (optsDoSort) {
+                tree.sort();
+            }
         }
         this.tree = tree;
     }

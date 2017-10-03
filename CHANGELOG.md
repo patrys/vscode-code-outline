@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.11
+
+- Use location ranges to determine symbol containment
+
 ## 0.0.10
 
 - Expand namespaces, packages, classes and structures by default (can be configured in settings)

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.12
+
+- Implement a much faster tree building algorithm ([issue #55](https://github.com/patrys/vscode-code-outline/issues/55))
+
 ## 0.0.11
 
 - Use location ranges to determine symbol containment

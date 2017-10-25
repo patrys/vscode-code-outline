@@ -69,6 +69,14 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         return commands.executeCommand<SymbolInformation[]>('vscode.executeDocumentSymbolProvider', document.uri);
     }
 
+    private compareSymbols(a: SymbolNode, b: SymbolNode) {
+        const startComparison = a.symbol.location.range.start.compareTo(b.symbol.location.range.start);
+        if (startComparison != 0) {
+            return startComparison;
+        }
+        return b.symbol.location.range.end.compareTo(a.symbol.location.range.end);
+    }
+
     private async updateSymbols(editor: TextEditor): Promise<void> {
         const tree = new SymbolNode();
         this.editor = editor;
@@ -78,22 +86,26 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
             if (optsTopLevel.indexOf(-1) < 0) {
                symbols = symbols.filter(sym => optsTopLevel.indexOf(sym.kind) >= 0);
             }
+            // Create symbol nodes
             const symbolNodes = symbols.map(symbol => new SymbolNode(symbol));
+            // Sort nodes by left edge ascending and right edge descending
+            symbolNodes.sort(this.compareSymbols);
+            // Start with an empty list of parent candidates
+            let potentialParents: SymbolNode[] = [];
             symbolNodes.forEach(currentNode => {
-                const potentialParents = symbolNodes.filter(node => node !== currentNode && node.symbol.location.range.contains(currentNode.symbol.location.range));
+                // Drop candidates that do not contain the current symbol range
+                potentialParents = potentialParents
+                .filter(node => node !== currentNode && node.symbol.location.range.contains(currentNode.symbol.location.range))
+                .sort(this.compareSymbols);
+                // See if any candidates remain
                 if (!potentialParents.length) {
                     tree.addChild(currentNode);
-                    return;
+                } else {
+                    const parent = potentialParents[potentialParents.length - 1];
+                    parent.addChild(currentNode);
                 }
-                potentialParents.sort((a: SymbolNode, b: SymbolNode) => {
-                    const startComparison = b.symbol.location.range.start.compareTo(a.symbol.location.range.start);
-                    if (startComparison != 0) {
-                        return startComparison;
-                    }
-                    return a.symbol.location.range.end.compareTo(b.symbol.location.range.end);
-                });
-                const parent = potentialParents[0];
-                parent.addChild(currentNode);
+                // Add current node as a parent candidate
+                potentialParents.push(currentNode);
             });
             if (optsDoSort) {
                 tree.sort();

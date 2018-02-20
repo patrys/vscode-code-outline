@@ -16,7 +16,7 @@ Default settings:
 
 ```json
 {
-  "symbolOutline.doSort": true,
+  "symbolOutline.doSort": false,
   "symbolOutline.doSelect": true,
   "symbolOutline.sortOrder": [
     "Class",

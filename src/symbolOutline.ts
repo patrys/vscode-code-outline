@@ -116,26 +116,10 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
 
     constructor(context: ExtensionContext) {
         this.context = context;
-        window.onDidChangeActiveTextEditor(editor => {
-            if (editor) {
-                this.refresh();
-            }
-        });
-        workspace.onDidCloseTextDocument(document => {
-            if (!this.editor.document) {
-                this.refresh();
-            }
-        });
-        workspace.onDidChangeTextDocument(event => {
-            if (!event.document.isDirty && event.document === this.editor.document) {
-                this.refresh();
-            }
-        });
-        workspace.onDidSaveTextDocument(document => {
-            if (document === this.editor.document) {
-                this.refresh();
-            }
-        });
+        window.onDidChangeActiveTextEditor(editor => this.refresh());
+        workspace.onDidCloseTextDocument(document => this.refresh());
+        workspace.onDidChangeTextDocument(event => this.refresh());
+        workspace.onDidSaveTextDocument(document => this.refresh());
     }
 
     async getChildren(node?: SymbolNode): Promise<SymbolNode[]> {
@@ -188,12 +172,9 @@ export class SymbolOutlineProvider implements TreeDataProvider<SymbolNode> {
         let treeItem = new TreeItem(node.symbol.name);
 
         if (node.children.length) {
-
             treeItem.collapsibleState = optsExpandNodes.length && SymbolNode.shouldAutoExpand(kind) ?
                 TreeItemCollapsibleState.Expanded : TreeItemCollapsibleState.Collapsed;
-        }
-        else {
-
+        } else {
             treeItem.collapsibleState = TreeItemCollapsibleState.None;
         }
 

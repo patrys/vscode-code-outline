@@ -2,7 +2,7 @@
     "name": "vscode-code-outline",
     "displayName": "Code Outline",
     "description": "A code outline tree provider for VSCode",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "publisher": "patrys",
     "homepage": "https://github.com/patrys/vscode-code-outline",
     "repository": {

@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.1.0
+
+- No longer select blocks of code when activating a symbol ([issue #69](https://github.com/patrys/vscode-code-outline/issues/69))
+- Automatically reveal the symbol under cursor in the tree view ([issue #12](https://github.com/patrys/vscode-code-outline/issues/12), [issue #71](https://github.com/patrys/vscode-code-outline/issues/71))
+- Require VS Code version 1.22.0 or later
+
+## 0.0.13
+
+- Documentation improvements in README
+
 ## 0.0.12
 
 - Implement a much faster tree building algorithm ([issue #55](https://github.com/patrys/vscode-code-outline/issues/55))

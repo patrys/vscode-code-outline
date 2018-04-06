@@ -2,7 +2,7 @@
     "name": "vscode-code-outline",
     "displayName": "Code Outline",
     "description": "A code outline tree provider for VSCode",
-    "version": "0.0.13",
+    "version": "0.1.0",
     "publisher": "patrys",
     "homepage": "https://github.com/patrys/vscode-code-outline",
     "repository": {
@@ -15,7 +15,7 @@
         "theme": "dark"
     },
     "engines": {
-        "vscode": "^1.16.0"
+        "vscode": "^1.22.0"
     },
     "categories": [
         "Other"
@@ -73,11 +73,6 @@
                         "Struct"
                     ],
                     "description": "Kinds of nodes to be expanded automatically."
-                },
-                "symbolOutline.doSelect": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Select the code segment by selecting item."
                 },
                 "symbolOutline.sortOrder": {
                     "type": "array",

@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.1.1
+
+- No longer automatically reveal the symbol under cursor as it caused problems ([issue #102](https://github.com/patrys/vscode-code-outline/issues/102), [issue #104](https://github.com/patrys/vscode-code-outline/issues/104), [issue #110](https://github.com/patrys/vscode-code-outline/issues/110), [issue #111](https://github.com/patrys/vscode-code-outline/issues/111))
+- Provide a context menu command that does the same thing
+
 ## 0.1.0
 
 - No longer select blocks of code when activating a symbol ([issue #69](https://github.com/patrys/vscode-code-outline/issues/69))

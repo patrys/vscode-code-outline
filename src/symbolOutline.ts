@@ -232,16 +232,19 @@ export class SymbolOutlineProvider {
     workspace.onDidCloseTextDocument(document => treeDataProvider.refresh());
     workspace.onDidChangeTextDocument(event => treeDataProvider.refresh());
     workspace.onDidSaveTextDocument(document => treeDataProvider.refresh());
-    window.onDidChangeTextEditorSelection(event => {
-      if (event.selections.length) {
-        const node = treeDataProvider.getNodeByPosition(
-          event.selections[0].active
-        );
-        if (node) {
-          this.symbolViewer.reveal(node);
+    commands.registerTextEditorCommand(
+      "symbolOutline.revealCurrentSymbol",
+      (editor: TextEditor) => {
+        if (editor.selections.length) {
+          const node = treeDataProvider.getNodeByPosition(
+            editor.selections[0].active
+          );
+          if (node) {
+            this.symbolViewer.reveal(node);
+          }
         }
       }
-    });
+    );
   }
 }
 

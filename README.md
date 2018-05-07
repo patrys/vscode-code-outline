@@ -27,6 +27,7 @@ Here is a list of languages known to work with Code Outline:
 | Markdown | Comes with VS Code |
 | Perl | [Perl](https://marketplace.visualstudio.com/items?itemName=henriiik.vscode-perl) |
 | PHP | [PHP Symbols](https://marketplace.visualstudio.com/items?itemName=linyang95.php-symbols) |
+| Powershell | [Powershell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) |
 | Python | [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) |
 | TypeScript | Comes with VS Code |
 | YAML | [YAML Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) |

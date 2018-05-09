@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.0
+
+- Provide a standalone activity bar viewlet ([issue #32](https://github.com/patrys/vscode-code-outline/issues/32), [issue #70](https://github.com/patrys/vscode-code-outline/issues/70), [issue #117](https://github.com/patrys/vscode-code-outline/issues/117))
+
 ## 0.1.1
 
 - No longer automatically reveal the symbol under cursor as it caused problems ([issue #102](https://github.com/patrys/vscode-code-outline/issues/102), [issue #104](https://github.com/patrys/vscode-code-outline/issues/104), [issue #110](https://github.com/patrys/vscode-code-outline/issues/110), [issue #111](https://github.com/patrys/vscode-code-outline/issues/111))

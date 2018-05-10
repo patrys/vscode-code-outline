@@ -22,6 +22,7 @@ Here is a list of languages known to work with Code Outline:
 | C++ | [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools), [cquery](https://github.com/cquery-project/vscode-cquery) |
 | Docker | [Docker](https://marketplace.visualstudio.com/items?itemName=PeterJausovec.vscode-docker) |
 | HTML | Comes with VS Code |
+| Go | [Go](https://marketplace.visualstudio.com/items?itemName=ms-vscode.Go) |
 | JavaScript | Comes with VS Code |
 | JSON | Comes with VS Code |
 | Markdown | Comes with VS Code |

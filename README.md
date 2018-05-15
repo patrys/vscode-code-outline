@@ -23,12 +23,13 @@ Here is a list of languages known to work with Code Outline:
 | Docker | [Docker](https://marketplace.visualstudio.com/items?itemName=PeterJausovec.vscode-docker) |
 | HTML | Comes with VS Code |
 | Go | [Go](https://marketplace.visualstudio.com/items?itemName=ms-vscode.Go) |
+| Java | [Language Support for Java(TM) by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.java)
 | JavaScript | Comes with VS Code |
 | JSON | Comes with VS Code |
 | Markdown | Comes with VS Code |
 | Perl | [Perl](https://marketplace.visualstudio.com/items?itemName=henriiik.vscode-perl) |
 | PHP | [PHP Symbols](https://marketplace.visualstudio.com/items?itemName=linyang95.php-symbols) |
-| Powershell | [Powershell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) |
+| Powershell | [PowerShell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) |
 | Python | [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) |
 | TypeScript | Comes with VS Code |
 | YAML | [YAML Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) |

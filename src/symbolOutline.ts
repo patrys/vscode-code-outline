@@ -132,6 +132,9 @@ export class SymbolOutlineTreeDataProvider
               node !== currentNode &&
               node.symbol.location.range.contains(
                 currentNode.symbol.location.range
+              ) &&
+              !node.symbol.location.range.isEqual(
+                currentNode.symbol.location.range
               )
           )
           .sort(this.compareSymbols);

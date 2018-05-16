@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.1
+
+- Fix case where two symbols have the same reported range ([issue #127](https://github.com/patrys/vscode-code-outline/issues/127))
+
 ## 0.2.0
 
 - Provide a standalone activity bar viewlet ([issue #32](https://github.com/patrys/vscode-code-outline/issues/32), [issue #70](https://github.com/patrys/vscode-code-outline/issues/70), [issue #117](https://github.com/patrys/vscode-code-outline/issues/117))

@@ -31,6 +31,7 @@ Here is a list of languages known to work with Code Outline:
 | PHP | [PHP Symbols](https://marketplace.visualstudio.com/items?itemName=linyang95.php-symbols) |
 | Powershell | [PowerShell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) |
 | Python | [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) |
+| Rust | [Rust (rls)](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust) |
 | TypeScript | Comes with VS Code |
 | YAML | [YAML Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) |
 

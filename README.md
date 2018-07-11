@@ -1,6 +1,6 @@
 # Code Outline tree provider for Visual Studio Code
 
-> :warning: Visual Studio Code now includes its own [Outline view](https://code.visualstudio.com/updates/v1_24#_outline-view) in the Explorer side bar. This extension will be deprecated once the Outline provided by the platform is considered stable (which is scheduled to happen in the 1.25 version).
+> :warning: DEPRECATED. Please use the [Outline view](https://code.visualstudio.com/updates/v1_24#_outline-view) that comes with Visual Studio Code.
 
 ## Features
 
